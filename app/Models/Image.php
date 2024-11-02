@@ -20,6 +20,11 @@ class Image extends Model
 
     public function majorCategory()
     {
-        return $this->belongsTo('App\Models\MajorCategory');
+        return $this->belongsTo(MajorCategory::class);
+    }
+
+    public function minorCategories()
+    {
+        return $this->belongsToMany(MinorCategory::class)->withTimestamps();
     }
 }

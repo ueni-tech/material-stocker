@@ -10,6 +10,6 @@ class MajorCategory extends Model
 
     public function images()
     {
-        return $this->hasMany('App\Models\Image');
+        return $this->hasMany(Image::class);
     }
 }
