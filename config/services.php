@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'google' => [
+        'auth_type' => env('GOOGLE_DRIVE_AUTH_TYPE', 'service-account'),
+        'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'),
+        'credentials_path' => env('GOOGLE_DRIVE_CREDENTIALS_PATH', base_path('config/google/service-account.json')),
+    ],
+
 ];
