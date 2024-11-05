@@ -95,5 +95,30 @@ class GoogleDriveService
         }
     }
 
-    // 他のメソッド...
+    private function getOrCreateFolder(string $folderName): string
+{
+    $query = sprintf("name = '%s' and mimeType = 'application/vnd.google-apps.folder' and trashed = false", $folderName);
+
+    $response = $this->service->files->listFiles([
+        'q' => $query,
+        'spaces' => 'drive',
+        'fields' => 'files(id, name)',
+    ]);
+
+    if (count($response->files) > 0) {
+        return $response->files[0]->id;
+    }
+
+    $fileMetadata = new \Google_Service_Drive_DriveFile([
+        'name' => $folderName,
+        'mimeType' => 'application/vnd.google-apps.folder',
+        'parents' => [$this->folderId]
+    ]);
+
+    $folder = $this->service->files->create($fileMetadata, [
+        'fields' => 'id'
+    ]);
+
+    return $folder->id;
+}
 }

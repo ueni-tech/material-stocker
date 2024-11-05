@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\imageUploadRequest;
 use Illuminate\Http\Request;
 
 use App\Services\Google\GoogleDriveService;
@@ -34,23 +35,19 @@ class FileController extends Controller
         }
     }
 
-    public function simpleUpload(Request $request)
+    public function simpleUpload(imageUploadRequest $request)
     {
-        $request->validate([
-            'file' => 'required|file|max:10240', // 10MB制限の例
-        ]);
-
         try {
-            $result = $this->driveService->uploadFile($request->file('file'));
+            $result = $this->driveService->uploadFile($request->file('file'), 'test-folder');
             
             return redirect()
-                ->route('files.upload')
+                ->route('files.simple-upload')
                 ->with('success', 'ファイルのアップロードが完了しました')
                 ->with('file_url', $result['view_link']);
                 
         } catch (GoogleDriveException $e) {
             return redirect()
-                ->route('files.upload')
+                ->route('files.simple-upload')
                 ->withErrors('アップロードに失敗しました: ' . $e->getMessage());
         }
     }

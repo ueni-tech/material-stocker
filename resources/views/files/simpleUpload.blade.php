@@ -65,19 +65,19 @@
               type="file"
               name="file"
               class="mt-1 block w-full text-sm text-gray-500
-                                   file:mr-4 file:py-2 file:px-4
-                                   file:rounded-full file:border-0
-                                   file:text-sm file:font-semibold
-                                   file:bg-blue-50 file:text-blue-700
-                                   hover:file:bg-blue-100"
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-full file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-blue-50 file:text-blue-700
+                      hover:file:bg-blue-100"
               required>
           </div>
 
           <button
             type="submit"
             class="w-full bg-blue-600 text-white rounded-md py-2 px-4
-                               hover:bg-blue-700 focus:outline-none focus:ring-2
-                               focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                  hover:bg-blue-700 focus:outline-none focus:ring-2
+                  focus:ring-blue-500 focus:ring-offset-2 transition-colors">
             アップロード
           </button>
         </div>
