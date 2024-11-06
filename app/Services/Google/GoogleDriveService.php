@@ -58,7 +58,7 @@ class GoogleDriveService
         // OAuth初期化処理（必要な場合）
     }
 
-    public function uploadFile($file, ?string $subFolder = null): array
+    public function uploadFile($file, ?string $subFolder = null, ?string $discription = null): array
     {
         try {
             $parentId = $subFolder ?
@@ -67,7 +67,8 @@ class GoogleDriveService
 
             $fileMetadata = new \Google_Service_Drive_DriveFile([
                 'name' => $file->getClientOriginalName(),
-                'parents' => [$parentId]
+                'parents' => [$parentId],
+                'description' => $discription
             ]);
 
             $result = $this->service->files->create(
@@ -75,14 +76,20 @@ class GoogleDriveService
                 [
                     'data' => file_get_contents($file->getRealPath()),
                     'uploadType' => 'multipart',
-                    'fields' => 'id, webViewLink, name'
+                    'fields' => 'id, webViewLink, name, mimeType, size, createdTime, modifiedTime, description, webContentLink',
                 ]
             );
 
             return [
                 'file_id' => $result->id,
-                'view_link' => $result->webViewLink,
-                'name' => $result->name
+                'web_view_link' => $result->webViewLink,
+                'name' => $result->name,
+                'mimeType' => $result->mimeType,
+                'size' => $result->size,
+                'created_time' => $result->createdTime,
+                'modified_time' => $result->modifiedTime,
+                'description' => $result->description,
+                'web_content_link' => $result->webContentLink
             ];
         } catch (\Exception $e) {
             Log::error('ファイルアップロードエラー', [

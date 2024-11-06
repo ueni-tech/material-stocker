@@ -20,7 +20,15 @@ class FileUploadService
       $result = $this->driveService->uploadFile($file);
       return [
         'success' => true,
-        'file_url' => $result['view_link']
+        'file_id' => $result['file_id'],
+        'file_url' => $result['web_view_link'],
+        'file_name' => $result['name'],
+        'file_type' => $result['mimeType'],
+        'file_size' => $result['size'],
+        'created_time' => $result['created_time'],
+        'modified_time' => $result['modified_time'],
+        'description' => $result['description'],
+        'web_content_link' => $result['web_content_link']
       ];
     } catch (GoogleDriveException $e) {
       return [

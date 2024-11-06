@@ -25,10 +25,20 @@
           <div class="ml-3">
             <p class="text-sm text-green-700">{{ session('success') }}</p>
             @if (session('file_url'))
-            <a href="{{ session('file_url') }}" target="_blank"
-              class="text-sm text-green-700 hover:text-green-600 underline">
-              ファイルを表示
-            </a>
+            <div>
+              <a href="{{ session('file_url') }}" target="_blank"
+                class="text-sm text-green-700 hover:text-green-600 underline">
+                ファイルを表示
+              </a>
+            </div>
+            @endif
+            @if(session('web_content_link'))
+            <div>
+              <a href="{{ session('web_content_link') }}" target="_blank"
+                class="text-sm text-green-700 hover:text-green-600 underline">
+                Webコンテンツをダウンロード
+              </a>
+            </div>
             @endif
           </div>
         </div>

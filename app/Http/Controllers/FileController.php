@@ -22,7 +22,8 @@ class FileController extends Controller
             return redirect()
                 ->route('files.upload')
                 ->with('success', 'ファイルのアップロードが完了しました')
-                ->with('file_url', $result['file_url']);
+                ->with('file_url', $result['file_url'])
+                ->with("web_content_link", $result['web_content_link']);
         } else {
             return redirect()
                 ->route('files.upload')
