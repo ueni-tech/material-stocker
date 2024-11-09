@@ -76,7 +76,7 @@ class GoogleDriveService
                 [
                     'data' => file_get_contents($file->getRealPath()),
                     'uploadType' => 'multipart',
-                    'fields' => 'id, webViewLink, name, mimeType, size, createdTime, modifiedTime, description, webContentLink',
+                    'fields' => 'id, webViewLink, name, mimeType, size, createdTime, modifiedTime, description, webContentLink, thumbnailLink',
                 ]
             );
 
@@ -89,7 +89,8 @@ class GoogleDriveService
                 'created_time' => $result->createdTime,
                 'modified_time' => $result->modifiedTime,
                 'description' => $result->description,
-                'web_content_link' => $result->webContentLink
+                'web_content_link' => $result->webContentLink,
+                'thumbnail_link' => $result->thumbnailLink
             ];
         } catch (\Exception $e) {
             Log::error('ファイルアップロードエラー', [

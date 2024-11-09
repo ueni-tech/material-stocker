@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Image;
 use App\Services\Google\GoogleDriveService;
 use App\Services\Google\Exceptions\GoogleDriveException;
 
@@ -18,6 +19,20 @@ class FileUploadService
   {
     try {
       $result = $this->driveService->uploadFile($file);
+
+      Image::create([
+        'major_category_id' => 1,
+        'drive_file_id' => $result['file_id'],
+        'drive_view_link' => $result['web_view_link'],
+        'drive_download_link' => $result['web_content_link'],
+        'title' => $result['name'],
+        'user_name' => 'test',
+        'mime_type' => $result['mimeType'],
+        'file_size' => $result['size'],
+        'discription' => $result['description'],
+        'thumbnail_link' => $result['thumbnail_link']
+      ]);
+
       return [
         'success' => true,
         'file_id' => $result['file_id'],
@@ -28,7 +43,8 @@ class FileUploadService
         'created_time' => $result['created_time'],
         'modified_time' => $result['modified_time'],
         'description' => $result['description'],
-        'web_content_link' => $result['web_content_link']
+        'web_content_link' => $result['web_content_link'],
+        'thumbnail_link' => $result['thumbnail_link']
       ];
     } catch (GoogleDriveException $e) {
       return [

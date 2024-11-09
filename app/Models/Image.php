@@ -16,6 +16,7 @@ class Image extends Model
         'mime_type',
         'file_size',
         'discription',
+        'thumbnail_link'
     ];
 
     public function majorCategory()
@@ -26,5 +27,15 @@ class Image extends Model
     public function minorCategories()
     {
         return $this->belongsToMany(MinorCategory::class)->withTimestamps();
+    }
+
+    public function getMimeTypeAttribute($value)
+    {
+        return explode('/', $value)[1];
+    }
+
+    public function getFileSizeAttribute($value)
+    {
+        return number_format($value / 1024, 1);
     }
 }

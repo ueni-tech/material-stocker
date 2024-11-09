@@ -40,6 +40,11 @@
               </a>
             </div>
             @endif
+            @if(session('thumbnail_link'))
+            <div>
+              <img src="{{session('thumbnail_link')}}" alt="">
+            </div>
+            @endif
           </div>
         </div>
       </div>
