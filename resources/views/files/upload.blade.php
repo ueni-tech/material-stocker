@@ -83,6 +83,9 @@
               @endforeach
             </select>
           </div>
+
+          <livewire:counter />
+
           <div>
             <!-- 説明 -->
             <label class="block text
@@ -91,8 +94,7 @@
             </label>
             <textarea
               name="description"
-              class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"
-            ></textarea>
+              class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"></textarea>
           </div>
 
           <button
