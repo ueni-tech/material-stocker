@@ -15,7 +15,7 @@ class Image extends Model
         'user_name',
         'mime_type',
         'file_size',
-        'discription',
+        'description',
         'thumbnail_link'
     ];
 

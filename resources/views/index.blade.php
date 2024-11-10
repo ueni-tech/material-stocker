@@ -14,24 +14,25 @@
     <div class="grid grid-cols-3 gap-4">
         @foreach ($files as $file)
         <div class="bg-gray-100 p-4">
-            <a href="{{ $file->drive_download_link }}">
-                <figure>
-                    <img src="{{ $file->thumbnail_link }}" alt="">
-                    <figcaption>
-                        <ul>
-                            <li>{{ $file->title }}</li>
-                            <li><span>アップロード：</span><span>{{ $file->user_name }}</span></li>
-                            <li><span>アップロード日：</span><span>{{ $file->created_at }}</span></li>
-                            <li>{{ $file->major_category }}</li>
-                            <li>{{ $file->mime_type }}</li>
-                            <li>{{ $file->file_size }}KB</li>
-                            <li>{{ $file->description }}</li>
-                        </ul>
-                    </figcaption>
-                </figure>
-            </a>
+            <div>
+                <img src="{{ $file->thumbnail_link }}" alt="">
+                <ul>
+                    <li>{{ $file->title }}</li>
+                    <li><span>アップロード：</span><span>{{ $file->user_name }}</span></li>
+                    <li><span>アップロード日：</span><span>{{ $file->created_at }}</span></li>
+                    <li><span>カテゴリー：</span><span>{{ $file->major_category }}</span></li>
+                    <li>{{ $file->mime_type }}</li>
+                    <li>{{ $file->file_size }}KB</li>
+                    <li><span>説明：</span><span>{{ $file->description }}</span></li>
+                </ul>
+            </div>
+            <a href="{{ $file->drive_download_link }}" class="inline-block bg-teal-500 text-white p-2 rounded">ダウンロード</a>
         </div>
         @endforeach
+    </div>
+
+    <div class="fixed bottom-8 right-8">
+        <a href="{{ route('files.upload') }}" class="bg-blue-500 text-white p-2 rounded">アップロードはこちら</a>
     </div>
 </body>
 

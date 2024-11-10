@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\imageUploadRequest;
+use App\Models\Image;
+use App\Models\MajorCategory;
 use App\Services\FileUploadService;
 
 class FileController extends Controller
@@ -14,17 +16,20 @@ class FileController extends Controller
         $this->fileUploadService = $fileUploadService;
     }
 
+    public function upload()
+    {
+        $majorCategories = MajorCategory::all();
+        return view('files.upload', compact('majorCategories'));
+    }
+
     public function fileUpload(imageUploadRequest $request)
     {
-        $result = $this->fileUploadService->fileUpload($request->file('file'));
+        $result = $this->fileUploadService->fileUpload($request);
 
         if ($result['success']) {
             return redirect()
                 ->route('files.upload')
-                ->with('success', 'ファイルのアップロードが完了しました')
-                ->with('file_url', $result['file_url'])
-                ->with("web_content_link", $result['web_content_link'])
-                ->with("thumbnail_link", $result['thumbnail_link']);
+                ->with('success', 'ファイルのアップロードが完了しました');
         } else {
             return redirect()
                 ->route('files.upload')

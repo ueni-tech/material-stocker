@@ -15,36 +15,16 @@
       <h1 class="text-2xl font-bold text-center mb-8">ファイルアップロード</h1>
 
       @if (session('success'))
-      <div class="mb-4 bg-green-50 border-l-4 border-green-400 p-4">
+      <div class="mb-4 bg-green-50 border-l-4 border-teal-400 p-4">
         <div class="flex">
           <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+            <svg class="h-5 w-5 text-teal-400" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
             </svg>
           </div>
           <div class="ml-3">
             <p class="text-sm text-green-700">{{ session('success') }}</p>
-            @if (session('file_url'))
-            <div>
-              <a href="{{ session('file_url') }}" target="_blank"
-                class="text-sm text-green-700 hover:text-green-600 underline">
-                ファイルを表示
-              </a>
-            </div>
-            @endif
-            @if(session('web_content_link'))
-            <div>
-              <a href="{{ session('web_content_link') }}" target="_blank"
-                class="text-sm text-green-700 hover:text-green-600 underline">
-                Webコンテンツをダウンロード
-              </a>
-            </div>
-            @endif
-            @if(session('thumbnail_link'))
-            <div>
-              <img src="{{session('thumbnail_link')}}" alt="">
-            </div>
-            @endif
+            <a href="{{ route('home') }}" class="text-blue-500 hover:underline">一覧に戻る</a>
           </div>
         </div>
       </div>
@@ -87,6 +67,33 @@
                       hover:file:bg-blue-100"
               required>
           </div>
+          <div>
+            <!-- カテゴリー選択 -->
+            <label class="block text
+            -sm font-medium text-gray-700">
+              カテゴリー
+            </label>
+            <select
+              name="major_category_id"
+              class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"
+              required>
+              <option value="">選択してください</option>
+              @foreach ($majorCategories as $majorCategory)
+              <option value="{{ $majorCategory->id }}">{{ $majorCategory->name }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div>
+            <!-- 説明 -->
+            <label class="block text
+            -sm font-medium text-gray-700">
+              説明
+            </label>
+            <textarea
+              name="description"
+              class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"
+            ></textarea>
+          </div>
 
           <button
             type="submit"
@@ -98,6 +105,11 @@
         </div>
       </form>
     </div>
+  </div>
+
+  <!-- 一覧に戻る -->
+  <div class="fixed bottom-8 right-8">
+    <a href="{{ route('home') }}" class="bg-teal-500 text-white p-2 rounded">一覧に戻る</a>
   </div>
 </body>
 
