@@ -3,52 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\imageUploadRequest;
-use Illuminate\Http\Request;
-
-use App\Services\Google\GoogleDriveService;
-use App\Services\Google\Exceptions\GoogleDriveException;
+use App\Models\Image;
+use App\Models\MajorCategory;
+use App\Services\FileUploadService;
 
 class FileController extends Controller
 {
-    private GoogleDriveService $driveService;
+    private FileUploadService $fileUploadService;
 
-    public function __construct(GoogleDriveService $driveService)
+    public function __construct(FileUploadService $fileUploadService)
     {
-        $this->driveService = $driveService;
+        $this->fileUploadService = $fileUploadService;
     }
 
-    public function upload(Request $request)
+    public function upload()
     {
-        try {
-            $result = $this->driveService->uploadFile($request->file('file'));
-            
-            return response()->json([
-                'success' => true,
-                'data' => $result
-            ]);
-            
-        } catch (GoogleDriveException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $majorCategories = MajorCategory::all();
+        return view('files.upload', compact('majorCategories'));
     }
 
-    public function simpleUpload(imageUploadRequest $request)
+    public function fileUpload(imageUploadRequest $request)
     {
-        try {
-            $result = $this->driveService->uploadFile($request->file('file'), 'test-folder');
-            
+        $result = $this->fileUploadService->fileUpload($request);
+
+        if ($result['success']) {
             return redirect()
-                ->route('files.simple-upload')
-                ->with('success', 'ファイルのアップロードが完了しました')
-                ->with('file_url', $result['view_link']);
-                
-        } catch (GoogleDriveException $e) {
+                ->route('files.upload')
+                ->with('success', 'ファイルのアップロードが完了しました');
+        } else {
             return redirect()
-                ->route('files.simple-upload')
-                ->withErrors('アップロードに失敗しました: ' . $e->getMessage());
+                ->route('files.upload')
+                ->withErrors($result['error']);
         }
     }
 }
