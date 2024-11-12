@@ -25,6 +25,7 @@ class imageUploadRequest extends FormRequest
             // 画像ファイルのバリデーションルール
             'file' => 'required|file|image|mimes:jpeg,png,jpg,gif,webp,svg|max:10240',
             'major_category_id' => 'required|integer|exists:major_categories,id',
+            'minor_categorys.*' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
         ];
     }
@@ -43,6 +44,7 @@ class imageUploadRequest extends FormRequest
             'file.max' => 'ファイルサイズは10MB以下でなければなりません。',
             'major_category_id.required' => 'カテゴリは必須です。',
             'major_category_id.exists' => '選択されたカテゴリは存在しません。',
+            'minor_categorys.*.max' => 'キーワードは255文字以下でなければなりません。',
             'description.max' => '説明は255文字以下でなければなりません。',
         ];
     }

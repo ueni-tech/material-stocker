@@ -84,7 +84,7 @@
             </select>
           </div>
 
-          <livewire:counter />
+          <livewire:add-minor-category />
 
           <div>
             <!-- 説明 -->

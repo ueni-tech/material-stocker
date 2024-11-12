@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\imageUploadRequest;
 use App\Models\Image;
+use App\Models\MinorCategory;
 use App\Services\Google\GoogleDriveService;
 use App\Services\Google\Exceptions\GoogleDriveException;
 
@@ -20,11 +21,12 @@ class FileUploadService
   {
     $file = $request->file('file');
     $majorCategoryId = $request->major_category_id;
+    $minorCategories = $request->input('minorCategories');
     $description = $request->input('description');
     try {
       $result = $this->driveService->uploadFile($file);
 
-      Image::create([
+      $image = Image::create([
         'major_category_id' => $majorCategoryId,
         'drive_file_id' => $result['file_id'],
         'drive_view_link' => $result['web_view_link'],
@@ -36,6 +38,15 @@ class FileUploadService
         'description' => $description,
         'thumbnail_link' => $result['thumbnail_link']
       ]);
+
+      if ($minorCategories) {
+        foreach ($minorCategories as $minorCategoryName) {
+          $minorCategory = MinorCategory::firstOrCreate([
+            'name' => $minorCategoryName,
+          ]);
+          $image->minorCategories()->attach($minorCategory->id);
+        }
+      }
 
       return [
         'success' => true,
