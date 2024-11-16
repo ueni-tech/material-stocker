@@ -10,6 +10,7 @@ class AddMinorCategory extends Component
     public $minorCategory;
     public $arrayMinorCategory = [];
     public $sujestMinorCategories = [];
+    public $isActive = false;
 
     protected $rules = [
         'minorCategory' => 'required|string|max:255',
@@ -26,7 +27,6 @@ class AddMinorCategory extends Component
         $this->minorCategory = preg_replace('/( |　)/', '', $this->minorCategory);
 
         $this->addArrayMinorCategory($this->minorCategory);
-
     }
 
     private function addArrayMinorCategory($minorCategory)
@@ -37,6 +37,7 @@ class AddMinorCategory extends Component
 
         $this->minorCategory = '';
         $this->sujestMinorCategories = [];
+        $this->isActive = false;
     }
 
     public function removeMinorCategory($index)
@@ -46,11 +47,15 @@ class AddMinorCategory extends Component
 
     public function updatedMinorCategory()
     {
-        $this->sujestMinorCategories = MinorCategory::where('name', 'like', $this->minorCategory . '%')->get();
-
         if (empty($this->minorCategory)) {
             $this->sujestMinorCategories = [];
+            $this->isActive = false;
+            return;
         }
+
+        $this->validate();
+        $this->isActive = true;
+        $this->sujestMinorCategories = MinorCategory::where('name', 'like', $this->minorCategory . '%')->get();
     }
 
     public function render()
@@ -58,6 +63,7 @@ class AddMinorCategory extends Component
         return view('livewire.add-minor-category', [
             'minorCategories' => $this->arrayMinorCategory,
             'sujestMinorCategories' => $this->sujestMinorCategories,
+            'isActive' => $this->isActive,
         ]);
     }
 }
