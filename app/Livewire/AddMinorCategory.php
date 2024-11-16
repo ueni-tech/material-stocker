@@ -16,6 +16,7 @@ class AddMinorCategory extends Component
     public function toArrayMinorCategory()
     {
         $this->validate();
+        $this->minorCategory = preg_replace('/( |　)/', '', $this->minorCategory);
 
         $this->arrayMinorCategory[] = $this->minorCategory;
         $this->minorCategory = '';
