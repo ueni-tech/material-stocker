@@ -49,7 +49,8 @@
       </div>
       @endif
 
-      <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return submitForm(this);"> @csrf
+      <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return submitForm(this);">
+        @csrf
         <div class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">
