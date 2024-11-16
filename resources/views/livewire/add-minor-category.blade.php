@@ -2,10 +2,21 @@
     <label class="block text-sm font-medium text-gray-700">
         キーワード
     </label>
+    <div>
+        @foreach($sujestMinorCategories as $sujestMinorCategory)
+        <span
+            wire:click.prevent="toArrayMinorCategory('{{ $sujestMinorCategory->name }}')"
+            class="inline-block bg-gray-200 text-black text-xs rounded-full px-2 py-1 mr-2 cursor-pointer"
+            wire:key="{{ $sujestMinorCategory->id }}"
+            >
+            {{ $sujestMinorCategory->name }}
+        </span>
+        @endforeach
+    </div>
     <div class="flex">
         <input
             type="text"
-            wire:model="minorCategory"
+            wire:model.live.debounce.300ms="minorCategory"
             class="block w-full text-sm text-gray-500 border-2 rounded">
         <button
             type="button"
@@ -18,7 +29,9 @@
     </div>
     <div>
         @foreach ($minorCategories as $index => $minorCategory)
-        <span class="inline-block bg-blue-100 text-blue-700 text-xs rounded-full px-2 py-1 mr-2">
+        <span class="inline-block bg-blue-100 text-blue-700 text-xs rounded-full px-2 py-1 mr-2"
+            wire:key = "{{ $index }}"
+        >
             {{ $minorCategory }}
             <button
                 wire:click.prevent="removeMinorCategory('{{ $index }}')"
