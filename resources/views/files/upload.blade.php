@@ -49,8 +49,7 @@
       </div>
       @endif
 
-      <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+      <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return submitForm(this);"> @csrf
         <div class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">
@@ -94,14 +93,15 @@
             </label>
             <textarea
               name="description"
-              class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"></textarea>
+              class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"
+              onkeydown="if(event.keyCode==13 && !event.shiftKey){event.preventDefault();return false;}"></textarea>
           </div>
 
           <button
             type="submit"
             class="w-full bg-blue-600 text-white rounded-md py-2 px-4
-                  hover:bg-blue-700 focus:outline-none focus:ring-2
-                  focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+            hover:bg-blue-700 focus:outline-none focus:ring-2
+            focus:ring-blue-500 focus:ring-offset-2 transition-colors">
             アップロード
           </button>
         </div>

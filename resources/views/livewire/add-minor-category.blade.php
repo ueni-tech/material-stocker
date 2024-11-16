@@ -16,7 +16,7 @@
         <input
             type="text"
             wire:model.live.debounce.300ms="minorCategory"
-            wire:keydown.enter="toArrayMinorCategory"
+            wire:keydown.enter.prevent="toArrayMinorCategory"
             class="block w-full text-sm text-gray-500 border-2 rounded">
         @if($isActive)
         <button
