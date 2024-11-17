@@ -9,6 +9,8 @@
                 <input
                     type="file"
                     name="file"
+                    wire:click="resetFile"
+                    wire:model.live="file"
                     class="mt-1 block w-full text-sm text-gray-500
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-full file:border-0
@@ -26,6 +28,7 @@
                 <select
                     name="major_category_id"
                     class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"
+                    wire:model.live="selectedCategory"
                     required>
                     <option value="">選択してください</option>
                     @foreach ($majorCategories as $majorCategory)
@@ -49,10 +52,9 @@
             </div>
 
             <button
-                type="submit"
-                class="w-full bg-blue-600 text-white rounded-md py-2 px-4
-            hover:bg-blue-700 focus:outline-none focus:ring-2
-            focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                class="w-full rounded-md py-2 px-4 transition-colors {{ $isFormValid 
+                ? 'bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed' }}">
                 アップロード
             </button>
         </div>
