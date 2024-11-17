@@ -51,12 +51,72 @@
                     onkeydown="if(event.keyCode==13 && !event.shiftKey){event.preventDefault();return false;}"></textarea>
             </div>
 
+            <!-- プログレスバー -->
+            <div id="progress-container" class="hidden">
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progress-bar" class="bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
+                </div>
+                <p id="progress-text" class="text-sm text-gray-500 mt-1 text-center">0%</p>
+            </div>
+
             <button
+                type="submit"
+                id="submit-button"
                 class="w-full rounded-md py-2 px-4 transition-colors {{ $isFormValid 
                 ? 'bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed' }}">
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed' }}"
+                {{ !$isFormValid ? 'disabled' : '' }}>
                 アップロード
             </button>
         </div>
     </form>
+
+    <script>
+        function submitForm(form) {
+            // プログレス表示の要素を取得
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const submitButton = document.getElementById('submit-button');
+
+            // プログレスバーを表示
+            progressContainer.classList.remove('hidden');
+            submitButton.disabled = true;
+
+            // FormDataオブジェクトの作成
+            const formData = new FormData(form);
+
+            // XMLHttpRequestの設定
+            const xhr = new XMLHttpRequest();
+            xhr.open(form.method, form.action);
+
+            // プログレスイベントの監視
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    const percentComplete = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = percentComplete + '%';
+                    progressText.textContent = percentComplete + '%';
+                }
+            };
+
+            // 完了時の処理
+            xhr.onload = function() {
+                // 通常のフォーム送信を実行
+                form.submit();
+            };
+
+            // エラー時の処理
+            xhr.onerror = function() {
+                progressContainer.classList.add('hidden');
+                submitButton.disabled = false;
+                alert('エラーが発生しました');
+            };
+
+            // リクエストの送信
+            xhr.send(formData);
+
+            // デフォルトのフォーム送信を防ぐ
+            return false;
+        }
+    </script>
 </div>
