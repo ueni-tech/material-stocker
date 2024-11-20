@@ -80,17 +80,19 @@ class GoogleDriveService
                 ]
             );
 
+            $file = $this->waitForThumbnail($result->id);
+
             return [
-                'file_id' => $result->id,
-                'web_view_link' => $result->webViewLink,
-                'name' => $result->name,
-                'mimeType' => $result->mimeType,
-                'size' => $result->size,
-                'created_time' => $result->createdTime,
-                'modified_time' => $result->modifiedTime,
-                'description' => $result->description,
-                'web_content_link' => $result->webContentLink,
-                'thumbnail_link' => $result->thumbnailLink
+                'file_id' => $file->id,
+                'web_view_link' => $file->webViewLink,
+                'name' => $file->name,
+                'mimeType' => $file->mimeType,
+                'size' => $file->size,
+                'created_time' => $file->createdTime,
+                'modified_time' => $file->modifiedTime,
+                'description' => $file->description,
+                'web_content_link' => $file->webContentLink,
+                'thumbnail_link' => $file->thumbnailLink
             ];
         } catch (\Exception $e) {
             Log::error('ファイルアップロードエラー', [
@@ -126,5 +128,28 @@ class GoogleDriveService
         ]);
 
         return $folder->id;
+    }
+
+    private function waitForThumbnail(string $fileId): \Google_Service_Drive_DriveFile
+    {
+        $maxAttempts = 10;
+        $attempt = 0;
+        $waitTime = 2; // 秒
+
+        while ($attempt < $maxAttempts) {
+            $file = $this->service->files->get($fileId, [
+                'fields' => 'id, webViewLink, name, mimeType, size, createdTime, modifiedTime, description, webContentLink, thumbnailLink',
+                'supportsAllDrives' => true
+            ]);
+
+            if (!empty($file->thumbnailLink)) {
+                return $file;
+            }
+
+            sleep($waitTime);
+            $attempt++;
+        }
+
+        throw new GoogleDriveException('サムネイルリンクの生成に失敗しました。');
     }
 }

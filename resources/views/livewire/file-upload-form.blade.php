@@ -71,7 +71,7 @@
         </div>
     </form>
 
-    <script>
+    <!-- <script>
         function submitForm(form) {
             // プログレス表示の要素を取得
             const progressContainer = document.getElementById('progress-container');
@@ -118,5 +118,5 @@
             // デフォルトのフォーム送信を防ぐ
             return false;
         }
-    </script>
+    </script> -->
 </div>
