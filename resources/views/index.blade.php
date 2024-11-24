@@ -23,6 +23,21 @@
                     <li><span>カテゴリー：</span><span>{{ $file->major_category }}</span></li>
                     <li>{{ $file->mime_type }}</li>
                     <li>{{ $file->file_size }}KB</li>
+                    <li>
+                        <div class="flex flex-wrap">
+                            @if($file->minor_categories)
+                            @foreach ($file->minor_categories as $minor_category)
+                            <span class="inline-block bg-blue-100 text-blue-700 text-xs rounded-full px-2 py-1 mr-2">
+                                {{ $minor_category }}
+                            </span>
+                            @endforeach
+                            @else
+                            <span class="inline-block bg-gray-300 text-black text-xs rounded-full px-2 py-1 mr-2">
+                                キーワードなし
+                            </span>
+                            @endif
+                        </div>
+                    </li>
                     <li><span>説明：</span><span>{{ $file->description }}</span></li>
                 </ul>
             </div>

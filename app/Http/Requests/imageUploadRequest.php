@@ -23,8 +23,9 @@ class imageUploadRequest extends FormRequest
     {
         return [
             // 画像ファイルのバリデーションルール
-            'file' => 'required|file|image|mimes:jpeg,png,jpg,gif,webp,svg|max:10240',
+            'file' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg,ai,eps,psd|max:20480',
             'major_category_id' => 'required|integer|exists:major_categories,id',
+            'minor_categorys.*' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
         ];
     }
@@ -38,11 +39,11 @@ class imageUploadRequest extends FormRequest
     {
         return [
             'file.required' => 'ファイルは必須です。',
-            'file.image' => 'ファイルは画像でなければなりません。',
-            'file.mimes' => 'ファイル形式は jpeg, png, jpg, gif, webp, svg のいずれかでなければなりません。',
-            'file.max' => 'ファイルサイズは10MB以下でなければなりません。',
+            'file.mimes' => 'ファイル形式は jpeg, png, jpg, gif, webp, svg, ai, eps, psd のいずれかでなければなりません。',
+            'file.max' => 'ファイルサイズは20MB以下でなければなりません。',
             'major_category_id.required' => 'カテゴリは必須です。',
             'major_category_id.exists' => '選択されたカテゴリは存在しません。',
+            'minor_categorys.*.max' => 'キーワードは255文字以下でなければなりません。',
             'description.max' => '説明は255文字以下でなければなりません。',
         ];
     }
