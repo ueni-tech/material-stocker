@@ -39,6 +39,9 @@ return [
         'auth_type' => env('GOOGLE_DRIVE_AUTH_TYPE', 'service-account'),
         'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'),
         'credentials_path' => env('GOOGLE_DRIVE_CREDENTIALS_PATH', base_path('config/google/service-account.json')),
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_CALLBACK_URL'),
     ],
 
 ];
