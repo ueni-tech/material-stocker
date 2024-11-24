@@ -34,7 +34,17 @@ class Image extends Model
 
     public function getMimeTypeAttribute($value)
     {
-        return explode('/', $value)[1];
+        $attribute = explode('/', $value)[1];
+        switch ($attribute) {
+            case 'jpeg':
+                return 'jpg';
+            case 'x-photoshop':
+                return 'psd';
+            case 'postscript':
+                return 'ai';
+            default:
+                return $attribute;
+        }
     }
 
     public function getFileSizeAttribute($value)
