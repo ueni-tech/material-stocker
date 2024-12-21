@@ -48,6 +48,8 @@
 
     <div class="fixed bottom-8 right-8">
         <a href="{{ route('files.upload') }}" class="bg-blue-500 text-white p-2 rounded">アップロードはこちら</a>
+        <!-- ログアウト -->
+        <a href="{{ route('logout') }}" class="bg-red-500 text-white p-2 rounded">ログアウト</a>
     </div>
 </body>
 
