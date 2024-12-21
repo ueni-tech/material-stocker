@@ -67,4 +67,10 @@ class GoogleController extends Controller
                 ->with('error', '認証中にエラーが発生しました。');
         }
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }
