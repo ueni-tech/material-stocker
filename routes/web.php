@@ -15,7 +15,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['auth'])->get('/', [HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->get('/logout', [GoogleController::class, 'logout'])->name('logout');
 
 
 Route::get('/upload', [FileController::class, 'upload'])->name('files.upload');
