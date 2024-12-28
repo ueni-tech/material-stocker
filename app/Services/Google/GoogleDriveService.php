@@ -80,6 +80,8 @@ class GoogleDriveService
                 ]
             );
 
+            $this->makeFilePublic($result->id);
+
             $file = $this->waitForThumbnail($result->id);
 
             return [
@@ -151,5 +153,17 @@ class GoogleDriveService
         }
 
         throw new GoogleDriveException('サムネイルリンクの生成に失敗しました。');
+    }
+
+    private function makeFilePublic(string $fileId): void
+    {
+        $permission = new \Google_Service_Drive_Permission([
+            'type' => 'anyone',
+            'role' => 'reader',
+        ]);
+
+        $this->service->permissions->create($fileId, $permission, [
+            'fields' => 'id',
+        ]);
     }
 }
