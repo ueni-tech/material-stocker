@@ -1,16 +1,6 @@
-<!-- resources/views/files/upload.blade.php -->
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ファイルアップロード</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-100">
-  <div class="min-h-screen flex items-center justify-center">
+<x-layouts.app>
+  <x-sidebar />
+  <div class="pl-52 min-h-screen flex items-center justify-center">
     <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
       <h1 class="text-2xl font-bold text-center mb-8">ファイルアップロード</h1>
 
@@ -49,7 +39,7 @@
       </div>
       @endif
 
-    <livewire:file-upload-form :majorCategories="$majorCategories" />
+      <livewire:file-upload-form :majorCategories="$majorCategories" />
 
     </div>
   </div>
@@ -58,6 +48,4 @@
   <div class="fixed bottom-8 right-8">
     <a href="{{ route('home') }}" class="bg-teal-500 text-white p-2 rounded">一覧に戻る</a>
   </div>
-</body>
-
-</html>
+</x-layouts.app>
