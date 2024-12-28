@@ -70,4 +70,23 @@ class FileUploadService
       ];
     }
   }
+
+  public function deleteFile($id)
+  {
+    $image = Image::find($id);
+    try {
+      $this->driveService->deleteFile($image->drive_file_id);
+      $image->delete();
+      return [
+        'success' => true,
+        'file_id' => $image->drive_file_id,
+        'file_name' => $image->title
+      ];
+    } catch (GoogleDriveException $e) {
+      return [
+        'success' => false,
+        'error' => '削除に失敗しました: ' . $e->getMessage()
+      ];
+    }
+  }
 }

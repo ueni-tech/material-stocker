@@ -19,5 +19,6 @@ Route::get('logout', [GoogleController::class, 'logout'])->name('logout');
 
 Route::get('/upload', [FileController::class, 'upload'])->name('files.upload');
 Route::post('/upload', [FileController::class, 'fileUpload'])->name('files.store');
+Route::delete('/upload/{id}', [FileController::class, 'deleteFile'])->name('files.delete');
 
 Route::get('/counter', Counter::class)->name('counter');

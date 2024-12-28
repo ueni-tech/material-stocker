@@ -36,4 +36,19 @@ class FileController extends Controller
                 ->withErrors($result['error']);
         }
     }
+
+    public function deleteFile($id)
+    {
+        $result = $this->fileUploadService->deleteFile($id);
+
+        if ($result['success']) {
+            return redirect()
+                ->route('home')
+                ->with('success', 'ファイルの削除が完了しました');
+        } else {
+            return redirect()
+                ->route('home')
+                ->withErrors($result['error']);
+        }
+    }
 }

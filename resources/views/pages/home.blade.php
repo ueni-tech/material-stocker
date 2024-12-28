@@ -34,6 +34,11 @@
                         </ul>
                     </div>
                     <a href="{{ $file->drive_download_link }}" class="inline-block bg-teal-500 text-white p-2 rounded">ダウンロード</a>
+                    <form action="{{ route('files.delete', $file->id) }}" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 text-white p-2 rounded">削除</button>
+                    </form>
                 </div>
                 @endforeach
             </div>

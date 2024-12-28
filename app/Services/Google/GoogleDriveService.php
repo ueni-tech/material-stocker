@@ -166,4 +166,17 @@ class GoogleDriveService
             'fields' => 'id',
         ]);
     }
+
+    public function deleteFile(string $fileId): void
+    {
+        try {
+            $this->service->files->delete($fileId);
+        } catch (\Exception $e) {
+            Log::error('ファイル削除エラー', [
+                'error' => $e->getMessage(),
+                'file_id' => $fileId
+            ]);
+            throw new GoogleDriveException('ファイルの削除に失敗しました: ' . $e->getMessage());
+        }
+    }
 }
