@@ -14,8 +14,10 @@ Route::middleware('guest')->group(function () {
     })->name('login');
 });
 
-Route::middleware(['auth'])->get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->get('/', [HomeController::class, 'home'])->name('home');
 Route::get('logout', [GoogleController::class, 'logout'])->name('logout');
 
 Route::get('/upload', [FileController::class, 'upload'])->name('files.upload');
 Route::post('/upload', [FileController::class, 'fileUpload'])->name('files.store');
+
+Route::get('/counter', Counter::class)->name('counter');

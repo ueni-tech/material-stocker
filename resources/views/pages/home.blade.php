@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-    @vite(['resources/js/app.js', 'resources/css/app.css'])
-</head>
-
-<body>
+<x-layouts.app>
     <h1 class="text-3xl">アップロード済み画像</h1>
     <div class="grid grid-cols-3 gap-4">
         @foreach ($files as $file)
@@ -51,6 +40,4 @@
         <!-- ログアウト -->
         <a href="{{ route('logout') }}" class="bg-red-500 text-white p-2 rounded">ログアウト</a>
     </div>
-</body>
-
-</html>
+</x-layouts.app>

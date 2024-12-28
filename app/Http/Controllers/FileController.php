@@ -19,7 +19,7 @@ class FileController extends Controller
     public function upload()
     {
         $majorCategories = MajorCategory::all();
-        return view('files.upload', compact('majorCategories'));
+        return view('pages.upload', compact('majorCategories'));
     }
 
     public function fileUpload(imageUploadRequest $request)
