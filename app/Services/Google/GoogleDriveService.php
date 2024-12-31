@@ -107,26 +107,27 @@ class GoogleDriveService
 
     private function getOrCreateFolder(string $folderName): string
     {
-        $query = sprintf("name = '%s' and mimeType = 'application/vnd.google-apps.folder' and trashed = false", $folderName);
-
-        $response = $this->service->files->listFiles([
-            'q' => $query,
-            'spaces' => 'drive',
-            'fields' => 'files(id, name)',
+        // $folderNameのフォルダが存在するか確認
+        $folder = $this->service->files->listFiles([
+            'q' => "mimeType='application/vnd.google-apps.folder' and name='$folderName' and trashed=false",
+            'fields' => 'files(id)',
+            'supportsAllDrives' => true
         ]);
 
-        if (count($response->files) > 0) {
-            return $response->files[0]->id;
+        if (count($folder->files) > 0) {
+            return $folder->files[0]->id;
         }
 
-        $fileMetadata = new \Google_Service_Drive_DriveFile([
+        // フォルダが存在しない場合は作成してそのIDを返す
+        $folderMetadata = new \Google_Service_Drive_DriveFile([
             'name' => $folderName,
             'mimeType' => 'application/vnd.google-apps.folder',
             'parents' => [$this->folderId]
         ]);
 
-        $folder = $this->service->files->create($fileMetadata, [
-            'fields' => 'id'
+        $folder = $this->service->files->create($folderMetadata, [
+            'fields' => 'id',
+            'supportsAllDrives' => true
         ]);
 
         return $folder->id;
