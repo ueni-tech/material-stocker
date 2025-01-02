@@ -76,7 +76,7 @@ class FileUploadService
                 'drive_view_link' => $result['web_view_link'],
                 'drive_download_link' => $result['web_content_link'],
                 'title' => $result['name'],
-                'user_name' => 'ユーザーさん',
+                'user_name' => $request->user()->name,
                 'mime_type' => $result['mimeType'],
                 'file_size' => $result['size'],
                 'description' => $description,

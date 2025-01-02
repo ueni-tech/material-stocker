@@ -16,7 +16,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
+<body>
     <div id="app">
         <nav>
             <!-- ナビゲーションの内容 -->
@@ -32,6 +32,8 @@
 
         @livewireScripts
     </div>
+
+    <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -8,7 +8,7 @@
         image: '',
         description: '',
         upload: '',
-        create_at: '',
+        formatted_date: '',
         major_category: '',
         mime_type: '',
         file_size: '',
@@ -17,7 +17,7 @@
         delete_link: ''
         }">
                 <!-- 画像リスト -->
-                <div class="grid grid-cols-3 gap-4">
+                <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:flex xl:flex-wrap">
                     @foreach ($files as $file)
                     <div>
                         <img src="{{ $file->thumbnail_link }}" alt="" class="cursor-pointer"
@@ -27,7 +27,7 @@
                         image = '{{ $file->thumbnail_link }}';
                         description = '{{ $file->description }}';
                         upload = '{{ $file->user_name }}';
-                        create_at = '{{ $file->created_at }}';
+                        formatted_date = '{{ $file->formatted_date }}';
                         major_category = '{{ $file->major_category }}';
                         mime_type = '{{ $file->mime_type }}';
                         file_size = '{{ $file->file_size }}';
@@ -53,18 +53,14 @@
                     x-transition:leave="transition ease-in duration-300"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0">
-                    <div class="bg-white p-3 rounded shadow-lg w-8/12 max-w-5xl" @click.stop>
-                        <div class="flex justify-end">
-                            <button @click="open = false" class="text-red-500">閉じる</button>
-                        </div>
+                    <div class="bg-white p-5 rounded shadow-lg w-8/12 max-w-5xl relative" @click.stop>
+                        <button @click="open = false" class="text-black-500 text-lg p-1 rounded-md transition absolute top-[3%] right-[3%] leading-none hover:bg-gray-300 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
                         <div class="max-w-80 m-auto">
-                            <h2 class="text-xl mb-4" x-text="title"></h2>
-                            <img :src="image" alt="" class="mb-4">
-                            <p x-text="`アップロード: ${upload}`"></p>
-                            <p x-text="`アップロード日: ${create_at}`"></p>
-                            <p x-text="`カテゴリー: ${major_category}`"></p>
-                            <p x-text="`ファイル形式: ${mime_type}`"></p>
-                            <p x-text="`ファイルサイズ: ${file_size}KB`"></p>
+                            <div class="mb-4 flex justify-between items-center gap-1">
+                                <h2 class="text-lg break-all" x-text="title"></h2>
+                                <p x-text="major_category" class="text-sm font-medium text-green-700 bg-green-100 rounded-md px-2 py-1 flex-shrink-0"></p>
+                            </div>
+                            <img :src="image" alt="" class="mb-2">
                             <div class="flex flex-wrap">
                                 <template x-for="minor_category in minor_categories" :key="minor_category">
                                     <span class="inline-block bg-blue-100 text-blue-700 text-xs rounded-full px-2 py-1 mr-2" x-text="minor_category"></span>
@@ -73,12 +69,24 @@
                                     <span class="inline-block bg-gray-300 text-black text-xs rounded-full px-2 py-1 mr-2">キーワードなし</span>
                                 </template>
                             </div>
-                            <div class="flex">
-                                <a :href="download_link" class="inline-block bg-teal-500 text-white p-2 rounded">ダウンロード</a>
+                            <div class="flex items-center mt-2 text-sm">
+                                <i class="fa-solid fa-user"></i>：<p x-text="upload" class="ml-1"></p>
+                            </div>
+                            <div class="flex items-center mt-2 text-sm">
+                                <i class="fa-solid fa-calendar-days"></i>：<p x-text="formatted_date" class="ml-1"></p>
+                            </div>
+                            <div class="flex items-center mt-2 text-sm">
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-file-image"></i>：<p x-text="mime_type" class="ml-1"></p>
+                                    <p x-text="file_size" class="ml-5"></p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <a :href="download_link" class=" bg-teal-500 hover:bg-teal-400 transition text-white p-2 rounded flex items-center gap-1"><i class="fa-solid fa-download text-xl"></i><span class="text-sm">ダウンロード</span></a>
                                 <form :action="delete_link" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 text-white p-2 rounded">削除</button>
+                                    <button type="submit"><i class="fa-regular fa-trash-can text-2xl text-red-200 hover:text-red-500 transition"></i></button>
                                 </form>
                             </div>
                         </div>
