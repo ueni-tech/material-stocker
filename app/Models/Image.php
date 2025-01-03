@@ -49,6 +49,6 @@ class Image extends Model
 
     public function getFileSizeAttribute($value)
     {
-        return number_format($value / 1024, 1);
+        return number_format($value / 1024000, 1) . 'MB';
     }
 }

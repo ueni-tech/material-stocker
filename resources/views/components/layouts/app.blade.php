@@ -1,15 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Livewire</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     @livewireStyles
+    <!-- Scripts and Styles -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body>
-    {{ $slot }}
-    
-    @livewireScripts
+    <div id="app">
+        <nav>
+            <!-- ナビゲーションの内容 -->
+        </nav>
+        
+        <main>
+            {{ $slot }}
+        </main>
+
+        <footer>
+            <!-- フッターの内容 -->
+        </footer>
+
+        @livewireScripts
+    </div>
+
+    <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

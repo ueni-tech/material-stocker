@@ -19,7 +19,7 @@ class FileController extends Controller
     public function upload()
     {
         $majorCategories = MajorCategory::all();
-        return view('files.upload', compact('majorCategories'));
+        return view('pages.upload', compact('majorCategories'));
     }
 
     public function fileUpload(imageUploadRequest $request)
@@ -33,6 +33,21 @@ class FileController extends Controller
         } else {
             return redirect()
                 ->route('files.upload')
+                ->withErrors($result['error']);
+        }
+    }
+
+    public function deleteFile($id)
+    {
+        $result = $this->fileUploadService->deleteFile($id);
+
+        if ($result['success']) {
+            return redirect()
+                ->route('home')
+                ->with('success', 'ファイルの削除が完了しました');
+        } else {
+            return redirect()
+                ->route('home')
                 ->withErrors($result['error']);
         }
     }
