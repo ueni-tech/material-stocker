@@ -71,6 +71,7 @@ class FileUploadService
             }
 
             $image = Image::create([
+                'user_id' => $request->user()->id,
                 'major_category_id' => $majorCategoryId,
                 'drive_file_id' => $result['file_id'],
                 'drive_view_link' => $result['web_view_link'],

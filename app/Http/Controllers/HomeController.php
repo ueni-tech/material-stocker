@@ -14,6 +14,7 @@ class HomeController extends Controller
             $image->major_category = $image->majorCategory->name;
             $image->minor_categories = $image->minorCategories()->pluck('name')->toArray();
             $image->formatted_date = Carbon::parse($image->created_at)->format('Y年m月d日');
+            $image->is_mine = $image->user_id === auth()->user()->id;
             return $image;
         })->sortByDesc('created_at');
 

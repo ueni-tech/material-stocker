@@ -10,6 +10,7 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'major_category_id',
         'drive_file_id',
         'drive_view_link',
@@ -21,6 +22,11 @@ class Image extends Model
         'description',
         'thumbnail_link'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function majorCategory()
     {

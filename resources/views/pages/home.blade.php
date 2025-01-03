@@ -14,7 +14,8 @@
         file_size: '',
         minor_categories: [],
         download_link: '',
-        delete_link: ''
+        delete_link: '',
+        delete_button: false,
         }">
                 <!-- 画像リスト -->
                 <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:flex xl:flex-wrap">
@@ -38,6 +39,7 @@
                         ];
                         download_link = '{{ $file->drive_download_link }}';
                         delete_link = '{{ route('files.delete', $file->id) }}';
+                        delete_button = '{{ $file->is_mine }}';
                         ">
                     </div>
                     @endforeach
@@ -83,11 +85,13 @@
                             </div>
                             <div class="flex justify-between items-center mt-4">
                                 <a :href="download_link" class=" bg-teal-500 hover:bg-teal-400 transition text-white p-2 rounded flex items-center gap-1"><i class="fa-solid fa-download text-xl"></i><span class="text-sm">ダウンロード</span></a>
-                                <form :action="delete_link" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"><i class="fa-regular fa-trash-can text-2xl text-red-200 hover:text-red-500 transition"></i></button>
-                                </form>
+                                <template x-if="delete_button">
+                                    <form :action="delete_link" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"><i class="fa-regular fa-trash-can text-2xl text-red-200 hover:text-red-500 transition"></i></button>
+                                    </form>
+                                </template>
                             </div>
                         </div>
                     </div>
