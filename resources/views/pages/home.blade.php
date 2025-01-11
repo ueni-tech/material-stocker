@@ -89,11 +89,11 @@
                                 <a :href="download_link" class=" bg-teal-500 hover:bg-teal-400 transition text-white p-2 rounded flex items-center gap-1"><i class="fa-solid fa-download text-xl"></i><span class="text-sm">ダウンロード</span></a>
                                 <template x-if="is_mine">
                                     <div class="flex items-center gap-2">
-                                        <a :href="edit_link" class="bg-sky-500 hover:bg-sky-400 transition text-white text-sm p-1 rounded">編集</a>
+                                        <a :href="edit_link"><i class="fa-regular fa-pen-to-square text-2xl text-indigo-300 hover:text-indigo-500 transition"></i></a>
                                         <form :action="delete_link" method="post" onsubmit="return confirm('本当に削除してもよろしいですか？');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"><i class="fa-regular fa-trash-can text-2xl text-red-200 hover:text-red-500 transition"></i></button>
+                                            <button type="submit"><i class="fa-regular fa-trash-can text-2xl text-red-300 hover:text-red-500 transition"></i></button>
                                         </form>
                                     </div>
                                 </template>
