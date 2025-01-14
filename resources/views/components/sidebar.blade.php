@@ -5,12 +5,17 @@
             <x-nav-link
                 :route="'home'"
                 :active="Route::is('home')">
-                アップロード済み画像
+                一覧
             </x-nav-link>
             <x-nav-link
                 :route="'files.upload'"
                 :active="Route::is('files.upload')">
                 アップロード
+            </x-nav-link>
+            <x-nav-link
+                :route="'mine'"
+                :active="Route::is('mine')">
+                アップ済み
             </x-nav-link>
             <a href="{{ route('logout') }}" class="js-logout block px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded">
                 ログアウト
