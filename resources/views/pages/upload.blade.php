@@ -44,8 +44,9 @@
     </div>
   </div>
 
-  <!-- 一覧に戻る -->
-  <div class="fixed bottom-8 right-8">
-    <a href="{{ route('home') }}" class="bg-teal-500 text-white p-2 rounded">一覧に戻る</a>
-  </div>
+    <!-- 遷移前のページに戻る -->
+    <div class="fixed bottom-8 right-8">
+        <a href="{{ url()->previous() }}" class="bg-teal-500 text-white p-2 rounded">戻る</a>
+    </div>
+    
 </x-layouts.app>

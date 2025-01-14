@@ -12,6 +12,11 @@ class AddMinorCategory extends Component
     public $sujestMinorCategories = [];
     public $isActive = false;
 
+    public function mount($havingMinorCategories = [])
+    {
+        $this->arrayMinorCategory = $havingMinorCategories;
+    }
+
     protected $rules = [
         'minorCategory' => 'required|string|max:255',
     ];

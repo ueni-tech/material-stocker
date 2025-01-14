@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\imageUpdateRequest;
 use App\Http\Requests\imageUploadRequest;
 use App\Models\Image;
 use App\Models\MajorCategory;
@@ -40,7 +41,6 @@ class FileUploadService
 
             // 保存したファイルのパスを返す
             return $thumbnailFileName;
-
         } catch (\Exception $e) {
             \Log::error('サムネイル保存エラー', [
                 'error' => $e->getMessage(),
@@ -71,6 +71,7 @@ class FileUploadService
             }
 
             $image = Image::create([
+                'user_id' => $request->user()->id,
                 'major_category_id' => $majorCategoryId,
                 'drive_file_id' => $result['file_id'],
                 'drive_view_link' => $result['web_view_link'],
@@ -113,6 +114,33 @@ class FileUploadService
         }
     }
 
+    public function fileupdate(imageUpdateRequest $request, $id)
+    {
+        $image = Image::find($id);
+        $majorCategoryId = $request->major_category_id;
+        $minorCategories = $request->input('minorCategories');
+        $description = $request->input('description');
+
+        $image->update([
+            'major_category_id' => $majorCategoryId,
+            'description' => $description
+        ]);
+
+        $image->minorCategories()->detach();
+        if ($minorCategories) {
+            foreach ($minorCategories as $minorCategoryName) {
+                $minorCategory = MinorCategory::firstOrCreate([
+                    'name' => $minorCategoryName,
+                ]);
+                $image->minorCategories()->attach($minorCategory->id);
+            }
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
+
     public function deleteFile($id)
     {
         $image = Image::find($id);
@@ -125,7 +153,7 @@ class FileUploadService
 
             $this->driveService->deleteFile($image->drive_file_id);
             $image->delete();
-            
+
             return [
                 'success' => true,
                 'file_id' => $image->drive_file_id,

@@ -30,7 +30,7 @@
                     class="mt-1 block w-full text-sm text-gray-500 hover:file:bg-blue-100 border-2 rounded"
                     wire:model.live="selectedCategory"
                     required>
-                    <option value="">選択してください</option>
+                    <option value=""class="bg-gray-400 text-white" disabled>選択してください</option>
                     @foreach ($majorCategories as $majorCategory)
                     <option value="{{ $majorCategory->id }}">{{ $majorCategory->name }}</option>
                     @endforeach
