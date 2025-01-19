@@ -16,6 +16,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function(){
   Route::get('/', [HomeController::class, 'home'])->name('home');
+  Route::get('/show/{majorCategory}', [HomeController::class, 'show'])->name('show');
   Route::get('/mine', [HomeController::class, 'mine'])->name('mine');
   Route::get('logout', [GoogleController::class, 'logout'])->name('logout');
 
