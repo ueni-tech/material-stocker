@@ -107,9 +107,12 @@ class GoogleDriveService
 
     private function getOrCreateFolder(string $folderName): string
     {
-        // $folderNameのフォルダが存在するか確認
+        // フォルダ名のエスケープ処理
+        $escapedFolderName = str_replace("'", "\\'", $folderName);
+
+        // 親フォルダのIDを条件に追加して検索（エスケープ済みの名前を使用）
         $folder = $this->service->files->listFiles([
-            'q' => "mimeType='application/vnd.google-apps.folder' and name='$folderName' and trashed=false",
+            'q' => "mimeType='application/vnd.google-apps.folder' and name='$escapedFolderName' and '$this->folderId' in parents and trashed=false",
             'fields' => 'files(id)',
             'supportsAllDrives' => true
         ]);
@@ -120,7 +123,7 @@ class GoogleDriveService
 
         // フォルダが存在しない場合は作成してそのIDを返す
         $folderMetadata = new \Google_Service_Drive_DriveFile([
-            'name' => $folderName,
+            'name' => $folderName,  // 作成時は元の（エスケープしていない）フォルダ名を使用
             'mimeType' => 'application/vnd.google-apps.folder',
             'parents' => [$this->folderId]
         ]);
