@@ -1,5 +1,5 @@
 <x-layouts.app>
-  <x-sidebar />
+  <x-sidebar :majorCategories="$majorCategories" />
   <div class="pl-52">
     <div class="p-5">
       <div x-data="{

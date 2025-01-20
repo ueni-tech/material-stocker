@@ -1,10 +1,14 @@
+@props(['majorCategories' => []])
+
 <aside class="w-52 h-screen bg-white shadow-lg fixed left-0 top-0">
     <div class="p-4">
         <h2 class="text-lg font-medium mb-4">メニュー</h2>
         <nav class="space-y-2">
-            <x-nav-link
+            <x-nav-link-index
                 :route="'home'"
-                :active="Route::is('home')">
+                :isHome="Route::is('home')"
+                :isShow="Route::is('show')"
+                :majorCategories="$majorCategories">
                 一覧
             </x-nav-link>
             <x-nav-link

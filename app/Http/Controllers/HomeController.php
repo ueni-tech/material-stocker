@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\MajorCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -10,6 +11,8 @@ class HomeController extends Controller
 {
   public function home()
   {
+    $majorCategories = MajorCategory::all();
+
     $files = Image::with('majorCategory')
       ->orderBy('created_at', 'desc')
       ->paginate(12)
@@ -21,11 +24,13 @@ class HomeController extends Controller
         return $image;
       });
 
-    return view('pages.home', compact('files'));
+    return view('pages.home', compact('files', 'majorCategories'));
   }
 
   public function show($majorCategory)
   {
+    $majorCategories = MajorCategory::all();
+
     $q = Image::whereHas('majorCategory', function ($query) use ($majorCategory) {
       $query->where('name', $majorCategory);
     });
@@ -42,7 +47,7 @@ class HomeController extends Controller
         return $image;
       });
 
-    return view('pages.show', compact('files', 'majorCategory'));
+    return view('pages.show', compact('files', 'majorCategory', 'majorCategories'));
   }
 
   public function mine()
