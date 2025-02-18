@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function(){
   Route::get('/', [HomeController::class, 'home'])->name('home');
   Route::get('/show/{majorCategory}', [HomeController::class, 'show'])->name('show');
   Route::get('/mine', [HomeController::class, 'mine'])->name('mine');
+  Route::get('/search', [HomeController::class, 'search'])->name('search');
   Route::get('logout', [GoogleController::class, 'logout'])->name('logout');
 
   Route::get('/upload', [FileController::class, 'upload'])->name('files.upload');

@@ -66,4 +66,16 @@ class HomeController extends Controller
 
     return view('pages.mine', compact('files'));
   }
+
+  public function search(Request $request)
+  {
+    $keyword = $request->input('keyword');
+    $files = Image::whereHas('minorCategories', function ($query) use ($keyword) {
+      $query->where('name', 'like', '%' . $keyword . '%');
+    })->paginate(12);
+
+    // $majorCategories = MajorCategory::all();
+
+    return view('pages.search', compact('files'));
+  }
 }

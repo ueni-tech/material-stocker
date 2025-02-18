@@ -2,6 +2,10 @@
   <x-sidebar :majorCategories="$majorCategories" />
   <div class="pl-52">
     <div class="p-5">
+    <form action="{{ route('search') }}" method="GET">
+        <input type="text" name="keyword" placeholder="キーワードを入力" class="border rounded p-2">
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">検索</button>
+      </form>
       <div x-data="{
         open: false,
         title: '',
